@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        printf("Usage ./caesar key");
+        return 1;
+    }
+    int n;
+    char secret[100] = {};
+    int check[100] = {};
+    char vetor[100] = {};
+    //printf(argv[1]%1);
+    strcpy(vetor,argv[1]);
+    int len = strlen(vetor);
+    int k = atoi(vetor);
+    
+    
+        for (int c = 0; c < len; c++)
+        {
+            if((vetor[c] >= 'a' && vetor[c] <= 'z') || (vetor[c] >= 'A' && vetor[c] <= 'Z'))
+            {
+                printf("Usage ./caesar key");
+                return 1;
+            }
+            else
+            {
+                continue;
+            }
+        }
+    
+
+    if (k == 0)
+    {
+        printf("Usage ./caesar key");
+        return 1;
+    }
+    
+    else
+    {
+        
+        printf ("plaintext: ");
+        scanf("%[^\n]",secret);
+        
+        n = atoi(vetor) % 26;
+        for (int i = 0; i < strlen(secret); i++) 
+        {    
+
+            if ((secret[i] >= 'a' && secret[i] <= 'z') )
+            {
+                secret[i] = ((secret[i] - 'a' + n) % 26) + 'a';
+            }
+            else if (secret[i] >= 'A' && secret[i] <= 'Z')
+            {
+                secret[i] = ((secret[i] - 'A' + n) % 26) + 'A';
+
+            }
+            else
+            {
+
+                continue;
+            }
+        }
+        printf("ciphertext: %s",secret);
+    }
+    
+    
+    
+    
+    
+return 0;
+    
+}
