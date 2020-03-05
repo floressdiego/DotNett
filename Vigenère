@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+#include <stdlib.h>
+
+int shift (char c);
+
+int main (int argc, char* argv[])
+{
+    int i,j;
+    char c;
+    char word[100] = {};
+    char secret[100] = {};
+    int k = 0;
+    int zeros = 0;
+    
+    
+    if (argc != 2) //blocking anything over and under 2 words
+    {
+        printf ("Usage: ./vigenere keyword\n");
+        return 1;
+    }
+    else if (atoi(argv[1]) != 0) //blocking numbers but still doesnt prevent 0
+    {
+        printf ("Usage: ./vigenere keyword\n");
+        return 1;
+
+    }
+    for (k = 0; k < strlen( argv[1]); k++)
+    {
+        if (argv[1][k] >= '0' && argv[1][k] <= '9')
+        {
+            zeros++;
+        }
+    }
+    if (zeros != 0)
+    {
+        printf ("Usage: ./vigenere keyword\n");
+        return 1;
+    }
+    else
+    {
+        //printf("atoi = %i",atoi(argv[1]));
+        printf("plaintext: ");
+        scanf("%[^\n]",secret);
+        i = 0;
+        //printf ("success\n");
+        for (j = 0; j < strlen(secret); j++) //for the length of secret
+        {
+            //printf("j = %i",j);
+            if (secret[j] == ' ')
+            {
+                word[j] = ' ';
+                j++;
+                
+            }
+            if (i == strlen(argv[1]))
+            {
+                //printf("strlen(argv[1]) = %lu",strlen(argv[1]));
+                i = 0;
+            }
+                c = argv[1][i];
+                //printf("i = %i",i);
+                int key = shift(argv[1][i]);
+                //printf("key = %i\n", key);
+                if (secret[j] >= 'a' && secret[j] <= 'z')
+                    {
+                        word[j] = ((secret[j] - 'a' + key) % 26) + 'a';
+
+                    }
+                    else if (secret[j] >= 'A' && secret[j] <= 'Z')
+                    {
+                        word[j] = ((secret[j] - 'A' + key) % 26) + 'A';
+                    }
+
+                
+            i++;
+        }
+        printf("ciphertext: ");
+        for (i = 0; i < 100; i++)
+        {
+            //printf("here.\n");
+            printf("%c",word[i]);
+        }
+        printf("\n");
+    }
+    
+}
+
+
+int shift (char c)
+{
+    int i = 0;
+    
+    int n = 0;
+    
+    if (c >= 'a' && c <= 'z')
+    {
+        n = (c - 'a');
+        
+    }
+    else if (c >= 'A' && c <= 'Z')
+    {
+        n = c - 'A';
+    }
+    
+    return n;
+}
